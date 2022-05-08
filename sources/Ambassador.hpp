@@ -15,6 +15,8 @@ namespace coup {
         void block(Player &player); // block captain from stealing
 
         std::string role();
+
+        ~Ambassador();
     };
 
 } // coup

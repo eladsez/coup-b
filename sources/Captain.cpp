@@ -7,7 +7,7 @@ namespace coup {
         if (to_block.get_last_operation() != "steal"){
             throw std::runtime_error(_name + " can't block " + to_block.get_name() + " didnt steal last turn");
         }
-        Player *stolen_from = ((Captain*) &to_block)->_stolen_from;
+        Player *stolen_from = (dynamic_cast<Captain*> (&to_block))->_stolen_from;
         stolen_from->set_coins(stolen_from->coins() + 2);
     }
 
@@ -27,6 +27,12 @@ namespace coup {
         _game->next_turn();
     }
 
+    Player& Captain::get_stolen_from(){
+        return *_stolen_from;
+    }
+
     std::string Captain::role(){return "Captain";}
+
+    Captain::~Captain() {}
 
 } // coup

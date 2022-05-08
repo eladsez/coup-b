@@ -7,15 +7,21 @@ using namespace std;
 namespace coup {
 
     Player::Player(Game &game, std::string name): _last_operation("none"), _coins(0){
+        if (game.get_state() != "init"){
+            throw runtime_error("can't add new players in the middle of the game");
+        }
         _game = &game;
-        _name = name;
+        _name = std::move(name);
         game.add_player(*this);
     }
 
     void Player::coins_check(){
-        if (_coins >= 10){
+        if (_coins >= MAX_COINS_HOLD){
             throw runtime_error(_name + " you must coup at this point");
          }
+        if (_game->players().size() < 2){
+            throw runtime_error(_name + " try to start the game alone");
+        }
     }
 
     std::string Player::get_name(){
@@ -46,7 +52,7 @@ namespace coup {
         _last_operation = "foreign_aid";
     }
 
-    int Player::coins() {
+    int Player::coins() const{
         return _coins;
     }
 
@@ -58,14 +64,29 @@ namespace coup {
         if (_game->turn() != _name){
             throw runtime_error(_name + " can't coup, it's not his turn");
         }
-        if (_coins < 7){
+        if (_coins < PLY_KICK_MIN){
             throw runtime_error(_name + " doesnt have enough coins to coup");
         }
-        _coins -= 7;
+        int his_index = -1;
+        int my_index = -1;
+        std::vector<std::string> players = _game->players();
+        for (size_t i = 0; i < players.size(); ++i){
+            if (to_kick.get_name() == players[i]){
+                his_index = (int)i;
+            }
+            if (_name == players[i]){
+                my_index = (int)i;
+            }
+        }
         _game->remove_player(to_kick);
-        _game->next_turn();
+        _coins -= PLY_KICK_MIN;
+        if (his_index > my_index || my_index == _game->players().size()) {
+            _game->next_turn();
+        }
         _last_operation = "coup";
     }
 
     std::string Player::role(){return "";}
+
+    Player::~Player() {}
 }

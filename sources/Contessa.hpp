@@ -13,6 +13,8 @@ namespace coup {
         void block(Player &assassin);
 
         std::string role();
+
+        ~Contessa();
     };
 
 } // coup

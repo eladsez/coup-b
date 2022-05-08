@@ -17,7 +17,11 @@ namespace coup {
 
         void steal(Player &to_steal);
 
+        Player& get_stolen_from();
+
         std::string role();
+
+        ~Captain();
     };
 
 } // coup

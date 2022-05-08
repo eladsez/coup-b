@@ -15,6 +15,8 @@ namespace coup {
         void block(Player &to_block);
 
         std::string role();
+
+        ~Duke();
     };
 
 } // coup

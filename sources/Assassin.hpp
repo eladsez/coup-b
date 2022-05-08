@@ -10,6 +10,7 @@ namespace coup {
     private:
         Player *_last_kicked;
         int _last_kick_index;
+        const static int ASS_KICK_MIN = 3;
 
     public:
         Assassin(Game &game, std::string name) : Player(game, name), _last_kicked(nullptr), _last_kick_index(-1){}
@@ -18,11 +19,12 @@ namespace coup {
 
         Player &get_last_kicked();
 
-        int get_last_kick_index(){
-            return _last_kick_index;
-        }
+        int get_last_kick_index() const;
 
         std::string role();
+
+        ~Assassin();
+
     };
 
 } // coup

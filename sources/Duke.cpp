@@ -20,4 +20,6 @@ namespace coup {
     } // can block whoever foreign_aid
 
     std::string Duke::role() { return "Duke"; }
+
+    Duke::~Duke() {}
 } // coup

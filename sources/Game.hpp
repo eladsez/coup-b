@@ -14,6 +14,8 @@ namespace coup {
     private:
         int _turn;
         std::vector<Player> _players;
+        std::string _state;
+        const static int MAX_PLAYER = 6;
 
     public:
         Game();
@@ -30,8 +32,9 @@ namespace coup {
 
         void next_turn();
 
-        static const int MAX_PLAYERS = 6;
-        static const int MIN_PLAYERS = 2;
+        std::string get_state();
+
+        ~Game();
     };
 
 } // coup
