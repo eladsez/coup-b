@@ -1,14 +1,11 @@
 #include "Player.hpp"
 #include <iostream>
 
-
-using namespace std;
-
 namespace coup {
 
     Player::Player(Game &game, std::string name): _last_operation("none"), _coins(0){
         if (game.get_state() != "init"){
-            throw runtime_error("can't add new players in the middle of the game");
+            throw std::runtime_error("can't add new players in the middle of the game");
         }
         _game = &game;
         _name = std::move(name);
@@ -17,10 +14,10 @@ namespace coup {
 
     void Player::coins_check(){
         if (_coins >= MAX_COINS_HOLD){
-            throw runtime_error(_name + " you must coup at this point");
+            throw std::runtime_error(_name + " you must coup at this point");
          }
         if (_game->players().size() < 2){
-            throw runtime_error(_name + " try to start the game alone");
+            throw std::runtime_error(_name + " try to start the game alone");
         }
     }
 
@@ -35,7 +32,7 @@ namespace coup {
     void Player::income() {
         coins_check();
         if (_game->turn() != _name){
-            throw runtime_error(_name + " can't income, it's not his turn");
+            throw std::runtime_error(_name + " can't income, it's not his turn");
         }
         ++_coins;
         _game->next_turn();
@@ -45,7 +42,7 @@ namespace coup {
     void Player::foreign_aid() {
         coins_check();
         if (_game->turn() != _name){
-            throw runtime_error(_name + " can't foreign_aid, it's not his turn");
+            throw std::runtime_error(_name + " can't foreign_aid, it's not his turn");
         }
         _game->next_turn();
         _coins += 2;
@@ -62,10 +59,10 @@ namespace coup {
 
     void Player::coup(Player &to_kick) {
         if (_game->turn() != _name){
-            throw runtime_error(_name + " can't coup, it's not his turn");
+            throw std::runtime_error(_name + " can't coup, it's not his turn");
         }
         if (_coins < PLY_KICK_MIN){
-            throw runtime_error(_name + " doesnt have enough coins to coup");
+            throw std::runtime_error(_name + " doesnt have enough coins to coup");
         }
         int his_index = -1;
         int my_index = -1;

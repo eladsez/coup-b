@@ -1,8 +1,5 @@
 #include "Game.hpp"
 #include <iostream>
-#include <algorithm>
-
-using namespace std;
 
 namespace coup {
 
@@ -22,7 +19,7 @@ namespace coup {
 
     void Game::add_player(Player &player, int index) {
         if (_players.size() == MAX_PLAYER) {
-            throw runtime_error("can't add to the game more then 6 players");
+            throw std::runtime_error("can't add to the game more then 6 players");
         }
         if (index == -1) {
             _players.push_back(player);
@@ -38,7 +35,7 @@ namespace coup {
                 return i;
             }
         }
-        throw runtime_error("didnt find player " + player.get_name() + " to coup");
+        throw std::runtime_error("didnt find player " + player.get_name() + " to coup");
         return -1;
     }
 
@@ -54,7 +51,7 @@ namespace coup {
 
     std::string Game::winner() {
         if (_players.size() != 1 || _state == "init") {
-            throw runtime_error("the game is not done yet!");
+            throw std::runtime_error("the game is not done yet!");
         }
         return _players[0].get_name();
     }
